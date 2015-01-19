@@ -1,17 +1,15 @@
 require(flowCore)
 
-arf_files<-dir('C:/Users/lab/Documents/JUAN PABLO/FACS/FACSVerse 16 Dec 2014/External JuanM20141216/',pattern = 'arf',full.names = T)
-Col0_files<-dir('C:/Users/lab/Documents/JUAN PABLO/FACS/FACSVerse 16 Dec 2014/External JuanM20141216/',pattern = 'Col0',full.names = T)
+FACSC20141216_files <- dir('C:/Users/lab/Documents/JUAN PABLO/FACS_Data/External JuanM20141216/',full.names = T)
 
-arf<- lapply(arf_files,function(x) read.FCS(x, transformation=FALSE,alter.names = T))
-Col0<- lapply(arf_files,function(x) read.FCS(x, transformation=FALSE,alter.names = T))
+FACSC20141216 <- lapply(FACSC20141216_files,function(x) read.FCS(x, transformation=FALSE,alter.names = T))
 
 localMax<-function(tt) which(diff(sign(diff(tt)))==-2)+1
 require(plyr)
 
-results_arf<-lapply(1:length(arf_files),function(j){
+results_arf<-lapply(1:length(FACSC20141216_files),function(j){
   
-data <-as.data.frame(arf[[j]]@exprs[,c('PI.H','DAPI.H')])
+data <-as.data.frame(FACSC20141216[[j]]@exprs[,c('PI.H','DAPI.H')])
 
 up<-seq(0.6,1.05,0.01)
 down<-seq(0.5,1,0.01)
@@ -26,12 +24,19 @@ results<-adply(combinations,1,function(i){
   local_maximas<-density(selection$PI.H)$x[localm][1:5]
 })
 
+#So here we test all the combination of the threshold and then we use the peaks that repeat more,
+# but if you have other idea, use it.
+
 final<-sapply(3:7,function(k) table(round(results[,k],0))[which.max(table(round(results[,k],0)))])
 
 })
 
+#MArio was tire and wrote this long chorizo
 
-ARF_RESULTS<-data.frame(file=dir('C:/Users/lab/Documents/JUAN PABLO/FACS/FACSVerse 16 Dec 2014/External JuanM20141216/',pattern = 'arf'),do.call(rbind,lapply(results_arf,function(x) as.numeric(names(x)))))
+FACSC20141216_RESULTS<-data.frame(file=dir('C:/Users/lab/Documents/JUAN PABLO/FACS_Data/External JuanM20141216/'),do.call(rbind,lapply(results_arf,function(x) as.numeric(names(x)))))
 
-colnames(ARF_RESULTS) <-c('File',1:5)
-ARF_RESULTS
+colnames(FACSC20141216_RESULTS) <-c('File',1:5)
+FACSC20141216_RESULTS
+
+#This is a good approach, but we force to find 5 peaks and probably will be better to find the real ono.
+#Also I need the number of how many points we have on each peak, so I can know the % of the total.

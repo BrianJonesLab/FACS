@@ -1,6 +1,6 @@
 require(flowCore)
 
-FACSC20141216_files <- dir('C:/Users/lab/Documents/JUAN PABLO/FACS_Data/External JuanM20141216/',full.names = T)
+FACSC20141216_files <- dir(pattern = 'fcs',full.names = T)
 
 FACSC20141216 <- lapply(FACSC20141216_files,function(x) read.FCS(x, transformation=FALSE,alter.names = T))
 
@@ -33,7 +33,7 @@ final<-sapply(3:7,function(k) table(round(results[,k],0))[which.max(table(round(
 
 #MArio was tire and wrote this long chorizo
 
-FACSC20141216_RESULTS<-data.frame(file=dir('C:/Users/lab/Documents/JUAN PABLO/FACS_Data/External JuanM20141216/'),do.call(rbind,lapply(results_arf,function(x) as.numeric(names(x)))))
+FACSC20141216_RESULTS<-data.frame(file=dir(pattern = 'fcs'),do.call(rbind,lapply(results_arf,function(x) as.numeric(names(x)))))
 
 colnames(FACSC20141216_RESULTS) <-c('File',1:5)
 FACSC20141216_RESULTS

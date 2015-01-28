@@ -1,15 +1,16 @@
-#library(raster)
+library(raster)
+require(flowCore)
 
-#FACSC20141216_files <- dir('.','.fcs',full.names = T)
-#FACSC20141216 <- lapply(FACSC20141216_files,function(x) read.FCS(x, transformation=FALSE,alter.names = T))
+FACSC20141216_files <- dir('.','.fcs',full.names = T)
 
-findPeaks <- function(data) {
+findPeaks <- function(file,silent=F) {
+  data <- read.FCS(file, transformation=FALSE,alter.names = T)
   to_plot <- data.frame(x=data@exprs[,'PI.H'],y=data@exprs[,'DAPI.H'])
   to_plot <- data_ <- log(to_plot)
   
   coordinates(data_) <- ~ x + y
   
-  template <- raster(res=0.1,ext=extent(data_))
+  template <- raster(res=0.1,ext=extent(data_),crs=NULL)
   test <- rasterize(data_,template,data_@coords[,1],fun='count')
   
   test_ <- na.exclude(as.data.frame(cbind(xyFromCell(test,cell = 1:ncell(test)),test[])))
@@ -45,12 +46,22 @@ findPeaks <- function(data) {
   
   cc <- simplify(lines)
 
+  buffer <- extract(test,cc,buffer=0.25,fun=sum)
+  values <- extract(test,cc)
+  
   plot(test,xlab='log(PI-H)',ylab='log(DAPI-H)')
-  sapply(cc[,1],function(x) abline(v=x))
-  sapply(cc[,2],function(x) abline(h=x))
-  apply(cc,1,function(x) points(x=x[1],y=x[2],col='blue',cex=2))
+  sapply(cc[,1],function(x) abline(v=x,lty=2))
+  sapply(cc[,2],function(x) abline(h=x,lty=2))
+  #apply(cc,1,function(x) points(x=x[1],y=x[2],col='blue',cex=2))
+  symbols(cc,circles=rep(0.25,nrow(cc)),inches=F,add=T)
   #ggplot(test_,aes(x,y,fill=V3)) + geom_raster()  + xlab('log(PI-H)') + ylab('log(DAPI-H)') + geom_vline(aes(xintercept=x),lines,linetype='longdash',colour='red') + geom_hline(aes(yintercept=y),lines,linetype='longdash',colour='red')
-  cat(c("Peaks' coordinates:",apply(as.matrix(cc),1,function(x) paste0(round(x,2),collapse = ', '))),sep = '\n')
+  #cat(c("Peaks' coordinates:",apply(as.matrix(cc),1,function(x) paste0(round(x,2),collapse = ', '))),sep = '\n')
+  response <- cbind(cc,peak.value=values,buffer)
+  colnames(response) <- c('log(PI-H)','log(DAPI-H)','peak','buffer_0.25u')
+  if(silent) response else {
+    cat(paste0('***** ',basename(file),' *****\n'))
+    print(response) 
+  }
 }
 
-findPeaks(FACSC20141216[[1]])
+findPeaks(FACSC20141216_files[[7]])

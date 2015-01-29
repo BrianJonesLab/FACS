@@ -84,6 +84,7 @@ findPeaks <- function(file,silent=F,pimp_my_plot=FALSE,peak_max=6) {
   }
 }
 
-findPeaks(FACSC20141216_files[[6]])
+
+findPeaks(FACSC20141216[[2]])
 
 findPeaks(FACSC20141216_files[[2]],pimp_my_plot = T)

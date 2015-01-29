@@ -1,4 +1,13 @@
-#library(raster)
+library(sp)
+require(sp)
+library(raster)
+require(raster)
+library(fields)
+require(fields)
+library(maps)
+require(maps)
+library(intamap)
+require(intamap)
 
 #FACSC20141216_files <- dir('.','.fcs',full.names = T)
 #FACSC20141216 <- lapply(FACSC20141216_files,function(x) read.FCS(x, transformation=FALSE,alter.names = T))
@@ -53,4 +62,4 @@ findPeaks <- function(data) {
   cat(c("Peaks' coordinates:",apply(as.matrix(cc),1,function(x) paste0(round(x,2),collapse = ', '))),sep = '\n')
 }
 
-findPeaks(FACSC20141216[[1]])
+findPeaks(FACSC20141216[[2]])

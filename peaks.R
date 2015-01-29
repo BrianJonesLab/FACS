@@ -5,10 +5,10 @@ require(ggplot2)
 
 FACSC20141216_files <- dir('.','.fcs',full.names = T)
 
-findPeaks <- function(file,silent=F,pimp_my_plot=FALSE) {
+findPeaks <- function(file,silent=F,pimp_my_plot=FALSE,peak_max=6) {
   data <- read.FCS(file, transformation=FALSE,alter.names = T)
   to_plot <- data.frame(x=data@exprs[,'PI.H'],y=data@exprs[,'DAPI.H'])
-  to_plot <- data_ <- log(to_plot)
+  to_plot <- data_ <- to_plot #in order to make colMeans in simplify function below
   
   coordinates(data_) <- ~ x + y
   
@@ -16,8 +16,8 @@ findPeaks <- function(file,silent=F,pimp_my_plot=FALSE) {
   test <- rasterize(data_,template,data_@coords[,1],fun='count')
   
   test_ <- na.exclude(as.data.frame(cbind(xyFromCell(test,cell = 1:ncell(test)),test[])))
-  lines <- test_[test_[,3] > quantile(test_[,3],0.995,na.rm = T),1:2]
-  
+  lines <- test_[test_[,3] > quantile(test_[,3],0.995,na.rm = T),1:3]
+    
   simplify <- function(lines) {
     aaa <- lapply(1:nrow(lines), function(x) {
       test <- fields::rdist(lines[x,],lines[-x,]) <= 0.2
@@ -28,6 +28,7 @@ findPeaks <- function(file,silent=F,pimp_my_plot=FALSE) {
     
     bbb <- lines[sapply(aaa,length) == 1,]
     
+    #the problem of this part is that the scale is in log scale so colMeans dos not applies properly  
     aaaa <- sapply(max(sapply(aaa,length)):2,function(x){
       step <- aaa[sapply(aaa,length) == x]
       if(length(step) == 0) return(NULL)
@@ -47,20 +48,24 @@ findPeaks <- function(file,silent=F,pimp_my_plot=FALSE) {
   }
   
   cc <- simplify(lines)
-
+  
   buffer <- extract(test,cc,buffer=0.25,fun=sum)
-  values <- extract(test,cc)
+  values <- extract(test,cc,fun=mean)
+  
+  cc<-cc[values,]
+  if((nrow(cc)< peak_max)) warning('Maximum number of peaks reached, reduce the threshold value in order to find more peaks')
+  
   
   #   ggplot(test_,aes(x,y,fill=V3)) + geom_raster()  + xlab('log(PI-H)') + ylab('log(DAPI-H)') + geom_vline(aes(xintercept=x),lines,linetype='longdash',colour='red') + geom_hline(aes(yintercept=y),lines,linetype='longdash',colour='red')
     if(pimp_my_plot){
     names(test_)[3] <- 'density'
     pimp<-ggplot(test_, aes(x=x, y=y)) + 
-    geom_tile(aes(fill = density),size=.5) + 
+    geom_tile(aes(fill = density)) + 
     coord_equal()+
     labs(x='log(PI-H)',y='log(DAPI-H)')+
     geom_vline(xintercept=cc$x,linetype=2)+
     geom_hline(yintercept=cc$y,linetype=2)+
-    geom_point(data = cc,aes(x,y),size=7.5,colour='green')+
+    geom_point(data = cc,aes(x,y),size=7.5)+
     theme_bw()
     print(pimp)
     } else {
@@ -79,6 +84,6 @@ findPeaks <- function(file,silent=F,pimp_my_plot=FALSE) {
   }
 }
 
-findPeaks(FACSC20141216_files[[2]])
+findPeaks(FACSC20141216_files[[6]])
 
 findPeaks(FACSC20141216_files[[2]],pimp_my_plot = T)

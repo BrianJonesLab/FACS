@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 library(sp)
 require(sp)
 library(raster)
@@ -8,17 +9,23 @@ library(maps)
 require(maps)
 library(intamap)
 require(intamap)
+=======
+library(raster)
+require(flowCore)
+require(maps)
+require(ggplot2)
+>>>>>>> 39a1c8dee7eb92a9ed3f6ca08b2315aee367c5b9
 
-#FACSC20141216_files <- dir('.','.fcs',full.names = T)
-#FACSC20141216 <- lapply(FACSC20141216_files,function(x) read.FCS(x, transformation=FALSE,alter.names = T))
+FACSC20141216_files <- dir('.','.fcs',full.names = T)
 
-findPeaks <- function(data) {
+findPeaks <- function(file,silent=F,pimp_my_plot=FALSE) {
+  data <- read.FCS(file, transformation=FALSE,alter.names = T)
   to_plot <- data.frame(x=data@exprs[,'PI.H'],y=data@exprs[,'DAPI.H'])
   to_plot <- data_ <- log(to_plot)
   
   coordinates(data_) <- ~ x + y
   
-  template <- raster(res=0.1,ext=extent(data_))
+  template <- raster(res=0.1,ext=extent(data_),crs=NULL)
   test <- rasterize(data_,template,data_@coords[,1],fun='count')
   
   test_ <- na.exclude(as.data.frame(cbind(xyFromCell(test,cell = 1:ncell(test)),test[])))
@@ -54,12 +61,41 @@ findPeaks <- function(data) {
   
   cc <- simplify(lines)
 
-  plot(test,xlab='log(PI-H)',ylab='log(DAPI-H)')
-  sapply(cc[,1],function(x) abline(v=x))
-  sapply(cc[,2],function(x) abline(h=x))
-  apply(cc,1,function(x) points(x=x[1],y=x[2],col='blue',cex=2))
-  #ggplot(test_,aes(x,y,fill=V3)) + geom_raster()  + xlab('log(PI-H)') + ylab('log(DAPI-H)') + geom_vline(aes(xintercept=x),lines,linetype='longdash',colour='red') + geom_hline(aes(yintercept=y),lines,linetype='longdash',colour='red')
-  cat(c("Peaks' coordinates:",apply(as.matrix(cc),1,function(x) paste0(round(x,2),collapse = ', '))),sep = '\n')
+  buffer <- extract(test,cc,buffer=0.25,fun=sum)
+  values <- extract(test,cc)
+  
+  #   ggplot(test_,aes(x,y,fill=V3)) + geom_raster()  + xlab('log(PI-H)') + ylab('log(DAPI-H)') + geom_vline(aes(xintercept=x),lines,linetype='longdash',colour='red') + geom_hline(aes(yintercept=y),lines,linetype='longdash',colour='red')
+    if(pimp_my_plot){
+    names(test_)[3] <- 'density'
+    pimp<-ggplot(test_, aes(x=x, y=y)) + 
+    geom_tile(aes(fill = density),size=.5) + 
+    coord_equal()+
+    labs(x='log(PI-H)',y='log(DAPI-H)')+
+    geom_vline(xintercept=cc$x,linetype=2)+
+    geom_hline(yintercept=cc$y,linetype=2)+
+    geom_point(data = cc,aes(x,y),size=7.5,colour='green')+
+    theme_bw()
+    print(pimp)
+    } else {
+      plot(test,xlab='log(PI-H)',ylab='log(DAPI-H)')
+      sapply(cc[,1],function(x) abline(v=x,lty=2))
+      sapply(cc[,2],function(x) abline(h=x,lty=2))
+      #apply(cc,1,function(x) points(x=x[1],y=x[2],col='blue',cex=2))
+      symbols(cc,circles=rep(0.25,nrow(cc)),inches=F,add=T)
+    }
+  #cat(c("Peaks' coordinates:",apply(as.matrix(cc),1,function(x) paste0(round(x,2),collapse = ', '))),sep = '\n')
+  response <- cbind(cc,peak.value=values,buffer)
+  colnames(response) <- c('log(PI-H)','log(DAPI-H)','peak','buffer_0.25u')
+  if(silent) response else {
+    cat(paste0('***** ',basename(file),' *****\n'))
+    print(response) 
+  }
 }
 
+<<<<<<< HEAD
 findPeaks(FACSC20141216[[2]])
+=======
+findPeaks(FACSC20141216_files[[2]])
+
+findPeaks(FACSC20141216_files[[2]],pimp_my_plot = T)
+>>>>>>> 39a1c8dee7eb92a9ed3f6ca08b2315aee367c5b9

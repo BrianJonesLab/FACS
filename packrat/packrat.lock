@@ -1,0 +1,251 @@
+PackratFormat: 1.4
+PackratVersion: 0.4.3.2
+RVersion: 3.1.1
+Repos: CRAN=http://cran.revolutionanalytics.com,
+    BioCsoft=http://bioconductor.org/packages/3.0/bioc,
+    BioCann=http://bioconductor.org/packages/3.0/data/annotation,
+    BioCexp=http://bioconductor.org/packages/3.0/data/experiment,
+    BioCextra=http://bioconductor.org/packages/3.0/extra,
+    CRANextra=http://www.stats.ox.ac.uk/pub/RWin
+
+Package: Biobase
+Source: Bioconductor
+Version: 2.26.0
+Hash: b71870d5a99d67d1aed2539586108549
+Requires: BiocGenerics
+
+Package: BiocGenerics
+Source: Bioconductor
+Version: 0.12.1
+Hash: 87ec9b94ce0544cb5730b6567d266994
+
+Package: DEoptimR
+Source: CRAN
+Version: 1.0-2
+Hash: ba1062fc2a15575b3c01760a82c2682c
+
+Package: EBImage
+Source: Bioconductor
+Version: 4.8.2
+Hash: 6f6b6272a311b793962bb47e2fe58d73
+Requires: BiocGenerics, abind, jpeg, locfit, png, tiff
+
+Package: IDPmisc
+Source: CRAN
+Version: 1.1.17
+Hash: 9fdc1267fe76218b8f72356ee3dd588e
+Requires: lattice
+
+Package: KernSmooth
+Source: CRAN
+Version: 2.23-13
+Hash: 70c881faa0bbe6522d1a20137dc2fb4f
+
+Package: MASS
+Source: CRAN
+Version: 7.3-37
+Hash: 05cd8a6b7ebab5d30f3d95c8b26cbdf1
+
+Package: RColorBrewer
+Source: CRAN
+Version: 1.1-2
+Hash: 5203278413b09be06483c5ac1920bb05
+
+Package: Rcpp
+Source: CRAN
+Version: 0.11.4
+Hash: 1f684f6afd28079e4e609b49f353e49f
+
+Package: Rwave
+Source: CRAN
+Version: 2.2
+
+Package: abind
+Source: CRAN
+Version: 1.4-0
+Hash: 5007322a6d081332d1d54b077a82bdf0
+
+Package: cluster
+Source: CRAN
+Version: 2.0.1
+Hash: 4f2aaa7fd35950424beb5c5c9752b6c5
+
+Package: colorspace
+Source: CRAN
+Version: 1.2-4
+
+Package: corpcor
+Source: CRAN
+Version: 1.6.7
+Hash: cdac3b82db5fa37bcda18f2efbf43407
+
+Package: dichromat
+Source: CRAN
+Version: 2.0-0
+
+Package: digest
+Source: CRAN
+Version: 0.6.8
+Hash: 89dc4c8734dad5322bb3c5c2af09056f
+
+Package: fields
+Source: CRAN
+Version: 7.1
+Requires: maps, spam
+
+Package: flowCore
+Source: Bioconductor
+Version: 1.32.2
+Hash: c77bb6fe46c937fa68f5e94e628c93f8
+Requires: Biobase, BiocGenerics, corpcor, graph, rrcov
+
+Package: flowViz
+Source: Bioconductor
+Version: 1.30.0
+Hash: d38c8502849559d59beb4ed1086d9950
+Requires: Biobase, IDPmisc, KernSmooth, MASS, RColorBrewer, flowCore,
+    hexbin, lattice, latticeExtra
+
+Package: ggplot2
+Source: CRAN
+Version: 1.0.0
+Requires: MASS, digest, gtable, plyr, proto, reshape2, scales
+
+Package: graph
+Source: Bioconductor
+Version: 1.44.1
+Hash: a912b9ae272ac399f6c71cf3cc706a4b
+Requires: BiocGenerics
+
+Package: gtable
+Source: CRAN
+Version: 0.1.2
+
+Package: hexbin
+Source: CRAN
+Version: 1.27.0
+Hash: 160017fb005a908def7938ba43ed02c3
+Requires: lattice
+
+Package: jpeg
+Source: CRAN
+Version: 0.1-8
+Hash: 2a96df07e30724f8bb773e4f78c634c6
+
+Package: labeling
+Source: CRAN
+Version: 0.3
+
+Package: lattice
+Source: CRAN
+Version: 0.20-29
+Hash: 17e9fe582d11197544a5ec817a80b21e
+
+Package: latticeExtra
+Source: CRAN
+Version: 0.6-26
+Hash: 2c59a30bb9d9d4651b913b828dca2640
+Requires: RColorBrewer, lattice
+
+Package: locfit
+Source: CRAN
+Version: 1.5-9.1
+Hash: f50f72e2b1a3ae02e591bceab01bcf27
+Requires: lattice
+
+Package: manipulate
+Source: CRAN
+Version: 1.0.1
+Hash: f6fb9d136d0353b1d5bebd6075c3c592
+
+Package: maps
+Source: CRAN
+Version: 2.3-9
+
+Package: munsell
+Source: CRAN
+Version: 0.4.2
+Requires: colorspace
+
+Package: mvtnorm
+Source: CRAN
+Version: 1.0-2
+Hash: 77cba5f561791810a6946f9ebff85a0e
+
+Package: packrat
+Source: github
+Version: 0.4.3-2
+Hash: 6a0669586f295f4b6336dd973e8b5f970732fc2e
+GithubRepo: packrat
+GithubUsername: rstudio
+GithubRef: master
+GithubSha1: 6a0669586f295f4b6336dd973e8b5f970732fc2e
+
+Package: pcaPP
+Source: CRAN
+Version: 1.9-60
+Hash: 36cfa3a987d99f93e3752303f84ef346
+Requires: mvtnorm
+
+Package: plyr
+Source: CRAN
+Version: 1.8.1
+Hash: 7dd935ee4050eaf2973108be2faf245e
+Requires: Rcpp
+
+Package: png
+Source: CRAN
+Version: 0.1-7
+Hash: 7559dcd0a9f188351986d0494ec1516d
+
+Package: proto
+Source: CRAN
+Version: 0.3-10
+
+Package: raster
+Source: CRAN
+Version: 2.3-24
+Hash: 27c9fb3bc822dfdf412caec24878d302
+Requires: sp
+
+Package: reshape2
+Source: CRAN
+Version: 1.4.1
+Requires: Rcpp, plyr, stringr
+
+Package: robustbase
+Source: CRAN
+Version: 0.92-3
+Hash: 86b49d824f24712d75088145521f1a06
+Requires: DEoptimR
+
+Package: rrcov
+Source: CRAN
+Version: 1.3-8
+Hash: a9ce1c03d98460b0487b494ea51c6f9e
+Requires: cluster, lattice, mvtnorm, pcaPP, robustbase
+
+Package: scales
+Source: CRAN
+Version: 0.2.4
+Requires: RColorBrewer, dichromat, labeling, munsell, plyr
+
+Package: sp
+Source: CRAN
+Version: 1.0-17
+Hash: 29bd0f1fc6cba0edf00eafe2b5b8e9d0
+Requires: lattice
+
+Package: spam
+Source: CRAN
+Version: 1.0-1
+
+Package: stringr
+Source: CRAN
+Version: 0.6.2
+Hash: cdde0cfa0f52cffeaca23a11a3899779
+
+Package: tiff
+Source: CRAN
+Version: 0.1-5
+Hash: bff6221f2ff93a5e6ddaf4314f97251a

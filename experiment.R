@@ -4,7 +4,8 @@ require(ggplot2)
 require(reshape2)
 require(Rwave)
 require(EBImage)
-FACSC20141216_files <- dir('.','.fcs',full.names = T)
+
+FACSC20141216_files <- dir('FACS_02FEB2015/.','.fcs',full.names = T)
 
 findPeaks1 <- function(file,tolerance=.995,peaks=5, resol=250,plot=F) {
 
@@ -62,4 +63,5 @@ print(results)
 cat('#################################')
 }  
 
-findPeaks1(file = FACSC20141216_files[[6]],tolerance = .995,resol = 200,peaks = 3,plot = T)
+findPeaks1(file = FACSC20141216_files[[4]],tolerance = .98,resol = 100,peaks = 5,plot = T)
+

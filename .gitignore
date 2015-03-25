@@ -1,7 +1,7 @@
 .Rproj.user
 .Rhistory
-.RData
 packrat/lib*/
 packrat/src/
 .Rprofile
-/FACS_02FEB2015
+/data
+

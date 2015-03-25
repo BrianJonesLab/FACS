@@ -1,11 +1,20 @@
-require(flowCore)
-require(MASS)
-require(ggplot2)
-require(reshape2)
-require(Rwave)
-require(EBImage)
+#' findPeaks1
+#' 
+#' This function looks for peaks in dna files 
+#' @param file a dna file
+#' @param tolerance limit for the peak detection (need to be more specific...)
+#' @param peaks number of desired peaks to find
+#' @param resol resolution of the kernel, default to 250 
+#' @param plot default TRUE
+#' @importFrom flowCore read.FCS
+#' @importFrom MASS kde2
+#' @import ggplot2
+#' @importFrom reshape2 melt 
+#' @import ggplot2
+#' @export findPeaks1
 
-FACSC20141216_files <- dir('FACS_02FEB2015/.','.fcs',full.names = T)
+
+
 
 findPeaks1 <- function(file,tolerance=.995,peaks=5, resol=250,plot=F) {
 
@@ -63,5 +72,4 @@ print(results)
 cat('#################################')
 }  
 
-findPeaks1(file = FACSC20141216_files[[4]],tolerance = .98,resol = 100,peaks = 5,plot = T)
 

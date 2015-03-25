@@ -1,0 +1,12 @@
+year <- 2015
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{peakAnalaysis}: A selection of peak analysis functions",
+         author = c(person("Mario", "Fajardo"),
+                    person("Juan","Pablo", "Matte"),
+                    person("Jose", "Padarian")),
+         year = 2015,
+         note = '...',
+         url = "https://github.com/BrianJonesLab/FACS")
+

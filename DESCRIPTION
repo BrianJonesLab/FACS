@@ -1,0 +1,28 @@
+Package: peakAnalysis
+Type: Package
+Title: Functions for peak analysis
+Version: 0.1
+Date: 2015-03-23
+Authors@R: c(person("Mario", "Fajardo", role = c("aut", "cre"),
+    email="brianjoneslab@gmail.com"),
+    person("Juan","Pablo", "Matte", role = c("aut")),
+    person("Jose", "Padarian", role="aut"))
+Authors: Mario Fajardo, Juan Pablo Matte, Jose Padarian
+Maintainer: Mario Fajardo <mario.fajardopedraza@sydney.edu.au>
+Description: A selection of peak analysis functions 
+License: GPL-3
+URL: https://github.com/BrianJonesLab/FACS
+Depends:
+    R (>= 3.1.1),
+    pls
+Imports:
+    plyr,
+    flowCore,
+    ggplot2,
+    reshape2,
+    raster,
+    sp,
+    maps,
+    fields
+Suggests:
+    testthat
